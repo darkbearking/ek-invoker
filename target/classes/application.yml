@@ -1,0 +1,19 @@
+#當啟動類選擇的是手動輸入啟動端口的時候，需要把這裡注釋掉。否則要放開下面的注釋，切記！
+server:
+  port: 9000
+spring:
+  application:
+    name: ek-invoker
+#下面這個ek-provider不是spring-boot體系下的什麼配置參數，而是我們調用自定義的ribbon規則的方式，每一行的含義在下面的注釋中包含了
+ek-provider:    #客戶端名稱 。當我們期望生效範圍會是覆蓋所有其他的規則的時候，我們要把這裡改寫為default，注意！
+  ribbon:       #命名空間
+    NFLoadBalanceClassName: com.troila.lw.MyRule    #配置項與配置屬性
+eureka:
+  client:
+  #每隔一定時間，這些註冊到eureka服務端的小服務們，會從服務端抓取一套服務提供者的列表，以備自己使用。這裡就是抓取週期。
+    registry-fetch-interval-seconds: 10
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+logging:
+  level:
+    com.netflix: debug
